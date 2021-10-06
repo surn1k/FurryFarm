@@ -1,4 +1,4 @@
-package com.furrryfarm.utils;
+package com.furrryfarm.utils.url;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,13 +1,11 @@
-package com.furrryfarm.utils;
+package com.furrryfarm.utils.url;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class ParameterStringBuilder {
-    public static String getParamsString(Map<String, String> params)
-            throws UnsupportedEncodingException {
+    public static String getParamsString(Map<String, String> params) {
         StringBuilder result = new StringBuilder();
 
         if (params == null) return "";

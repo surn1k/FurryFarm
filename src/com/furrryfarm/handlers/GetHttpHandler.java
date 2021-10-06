@@ -1,6 +1,6 @@
 package com.furrryfarm.handlers;
 
-import com.furrryfarm.utils.ParameterStringParser;
+import com.furrryfarm.utils.url.ParameterStringParser;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -13,7 +13,7 @@ abstract class GetHttpHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         if (!validateRequest(httpExchange)) {
-            returnError(httpExchange, "Invalid request", 404);
+            returnString(httpExchange, "Invalid request", 404);
             return;
         }
         Map<String, String> requestParamValue = ParameterStringParser.parse(httpExchange.getRequestURI().getQuery());
@@ -21,13 +21,18 @@ abstract class GetHttpHandler implements HttpHandler {
         handleGETRequest(httpExchange, components, requestParamValue);
     }
 
-    protected void returnError(HttpExchange httpExchange, String text, int code) throws IOException {
+    protected void returnString(HttpExchange httpExchange, String text, int code) throws IOException {
         OutputStream outputStream = httpExchange.getResponseBody();
 
         httpExchange.sendResponseHeaders(code, text.length());
         outputStream.write(text.getBytes());
         outputStream.flush();
         outputStream.close();
+    }
+
+    protected void redirect(HttpExchange httpExchange, String path) throws IOException {
+        httpExchange.getResponseHeaders().add("Location", path);
+        returnString(httpExchange, "Redirecting...", 302);
     }
 
     private LinkedList<String> parseComponents(HttpExchange httpExchange) {
