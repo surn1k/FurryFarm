@@ -1,4 +1,5 @@
 package com.company;
+import java.lang.reflect.Executable;
 import java.sql.ResultSet;
 import java.sql.SQLData;
 import java.util.ArrayList;
@@ -6,9 +7,6 @@ import java.util.ArrayList;
 
 
 public class Farmers extends Table{
-    public Farmers(){
-        tableName = "FARMERS";
-    }
 
     @Override
     String getName() {
@@ -32,11 +30,23 @@ public class Farmers extends Table{
     }
 
     public void writeRef(int id, String login, String password) {
-        String request = "INSERT INTO " + tableName + "(ID, LOGIN, PASSWORD) VALUES " +
+        String request = "INSERT INTO " + tableName + " (ID, LOGIN, PASSWORD) VALUES " +
                 "(" + id + ", " + login + ", " + password + ");";
         try{
             DataBase.GetDataBase().AskDB(request);
         }catch (Exception ignored){}
+    }
+
+    public ArrayList<String> findRef(String login){
+        ArrayList<String> response = new ArrayList<String>();
+        String request = "SELECT * " + tableName + " WHERE LOGIN=" + login + ";";
+        try{
+            ResultSet result = DataBase.GetDataBase().AskDB(request);
+            response.add(result.getString("id"));
+            response.add(result.getString("login"));
+            response.add(result.getString("password"));
+        }catch(Exception ignored){}
+        return response;
     }
 
     @Override
@@ -54,5 +64,5 @@ public class Farmers extends Table{
         return null;
     }
 
-    private String tableName;
+    private final static String tableName = "FARMERS";
 }
