@@ -16,19 +16,27 @@ public class Farmers extends Table{
     }
 
     @Override
-    String getRef(int id) {
+    ArrayList<String> getRef(int id) {
+        ArrayList<String> response = new ArrayList<String>();
         String request = "SELECT " + id + " FROM " + tableName+";";
         try {
             ResultSet result = DataBase.GetDataBase().AskDB(request);
+            while(result.next()){
+                if(id == result.getInt("id")){
+                    response.add(result.getString("login"));
+                    response.add(result.getString("password"));
+                }
+            }
         } catch (Exception ignored){}
-
+        return response;
     }
 
-    @Override
-    public void writeRef(int id) {
-        String request = "INSERT INTO " + tableName + ";";
-        try {
-        }
+    public void writeRef(int id, String login, String password) {
+        String request = "INSERT INTO " + tableName + "(ID, LOGIN, PASSWORD) VALUES " +
+                "(" + id + ", " + login + ", " + password + ");";
+        try{
+            DataBase.GetDataBase().AskDB(request);
+        }catch (Exception ignored){}
     }
 
     @Override
