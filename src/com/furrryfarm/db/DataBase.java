@@ -13,7 +13,7 @@ public class DataBase {
         return dataBase;
     }
 
-    private DataBase(){
+    private DataBase() {
         created = true;
     }
 
