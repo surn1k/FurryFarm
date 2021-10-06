@@ -6,8 +6,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-class FarmerTable extends Table {
+public class FarmerTable extends Table {
     private final String name = "farmer";
+
+    @Override
+    protected String getName() {
+        return name;
+    }
 
     @Override
     public Object serialize(ResultSet row) throws SQLException {

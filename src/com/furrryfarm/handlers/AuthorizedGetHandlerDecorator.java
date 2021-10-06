@@ -1,6 +1,7 @@
 package com.furrryfarm.handlers;
 
 
+import com.furrryfarm.utils.cookies.CookieManager;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
@@ -17,19 +18,9 @@ public class AuthorizedGetHandlerDecorator extends GetHttpHandlerDecorator {
     protected void handleGETRequest(HttpExchange httpExchange,
                                     List<String> components,
                                     Map<String, String> parameters) throws IOException {
-        String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
-        if (sessionCookie != null) {
-            HttpCookie idCookie = HttpCookie.parse(sessionCookie)
-                                            .stream()
-                                            .filter(item -> item.getName().equals("UserID"))
-                                            .findFirst()
-                                            .orElse(null);
-
-            if (idCookie == null || idCookie.getValue().equals("null")) handleUnauthorizedRequest(httpExchange);
-            else {
-                handler.handleGETRequest(httpExchange, components, parameters);
-            }
-        } else handleUnauthorizedRequest(httpExchange);
+        HttpCookie idCookie = CookieManager.getCookieByName(httpExchange, "UserID");
+        if (idCookie == null || idCookie.getValue().equals("null")) handleUnauthorizedRequest(httpExchange);
+        else handler.handleGETRequest(httpExchange, components, parameters);
     }
 
     void handleUnauthorizedRequest(HttpExchange httpExchange) throws IOException {

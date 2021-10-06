@@ -9,6 +9,11 @@ public class DealerTable extends Table {
     private final String name = "dealer";
 
     @Override
+    protected String getName() {
+        return name;
+    }
+
+    @Override
     public Object serialize(ResultSet row) throws SQLException {
         return new Dealer(row.getInt("id"), row.getString("name"));
     }

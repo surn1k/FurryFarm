@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> Login Page </title>
+    <title> Register Page </title>
     <style>
         Body {
             font-family: Calibri, Helvetica, sans-serif;
@@ -45,14 +45,24 @@
     </style>
 </head>
 <body>
-<center> <h1> FurryFarm Login Page </h1> </center>
-<form method="GET" action="/login/auth">
+<center> <h1> FurryFarm Register Page </h1> </center>
+<form method="GET" action="/register/new">
     <div class="container">
+        <label>Name : </label>
+        <input type="text" placeholder="Enter name" name="name" required>
         <label>Login : </label>
         <input type="text" placeholder="Enter login" name="login" required>
         <label>Password : </label>
         <input type="password" placeholder="Enter Password" name="password" required>
-        <button type="submit">Login</button>
+
+        <label for="userType">User type:</label>
+
+        <select name="type" id="userType">
+            <option value="farmer">Farmer</option>
+            <option value="dealer">Dealer</option>
+        </select>
+
+        <button type="submit">Register</button>
     </div>
 </form>
 </body>

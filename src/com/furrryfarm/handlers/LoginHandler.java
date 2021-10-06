@@ -1,16 +1,15 @@
 package com.furrryfarm.handlers;
 
+import com.furrryfarm.utils.auth.CredentialsManager;
+import com.furrryfarm.utils.cookies.CookieManager;
 import com.furrryfarm.utils.html.TemplateLoader;
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 
 import java.io.IOException;
-import java.net.HttpCookie;
 import java.util.List;
 import java.util.Map;
 
 public class LoginHandler extends GetHttpHandler {
-
     @Override
     void handleGETRequest(HttpExchange httpExchange,
                           List<String> components,
@@ -25,20 +24,15 @@ public class LoginHandler extends GetHttpHandler {
                     String login = parameters.get("login");
                     String password = parameters.get("password");
 
-                    if (login.equals("admin") && password.equals("admin")) {
-                        // GET UserID from db
-                        HttpCookie cookie = new HttpCookie("UserID", "0");
-                        httpExchange.getResponseHeaders().add("Set-Cookie", cookie + "; Path=/");
+                    if (CredentialsManager.validate(login, password)) {
+                        Integer id = CredentialsManager.getID(login, password);
+                        assert id != null;
+                        CookieManager.setCookie(httpExchange,"UserID", id.toString());
                         redirect(httpExchange, "/home");
-                    } else {
-                        returnString(httpExchange, "Invalid login or password", 403);
-                    }
-                } else {
-                    returnString(httpExchange, "Invalid request", 404);
-                }
+                    } else returnString(httpExchange, "Invalid login or password", 403);
+                } else returnString(httpExchange, "Invalid request", 404);
         } else if (components.size() == 2 && components.get(1).equals("logout")) {
-            HttpCookie cookie = new HttpCookie("UserID", null);
-            httpExchange.getResponseHeaders().add("Set-Cookie", cookie + "; Path=/");
+            CookieManager.setCookie(httpExchange, "UserID", null);
             redirect(httpExchange, "/login");
         }
 

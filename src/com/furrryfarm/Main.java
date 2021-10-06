@@ -1,9 +1,6 @@
 package com.furrryfarm;
 
-import com.furrryfarm.handlers.AuthorizedGetHandlerDecorator;
-import com.furrryfarm.handlers.LoggingGetHandlerDecorator;
-import com.furrryfarm.handlers.LoginHandler;
-import com.furrryfarm.handlers.HomeHandler;
+import com.furrryfarm.handlers.*;
 import com.sun.net.httpserver.HttpServer;
 
 import java.net.InetSocketAddress;
@@ -23,6 +20,7 @@ public class Main {
         server.createContext("/home",
                 new LoggingGetHandlerDecorator(new AuthorizedGetHandlerDecorator(new HomeHandler())));
         server.createContext("/login", new LoggingGetHandlerDecorator(new LoginHandler()));
+        server.createContext("/register", new RegisterHandler());
 
         ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
         server.setExecutor(threadPoolExecutor);

@@ -8,18 +8,19 @@ import java.util.LinkedList;
 
 
 public abstract class Table {
-    protected String name = null;
-    public String getName() { return name; }
+    String name;
+
+    protected abstract String getName();
 
     public LinkedList<Object> getByID(int id) throws SQLException, ClassNotFoundException {
-        return getRows("select * from " + name + " where id=" + id);
+        return getRows("select * from " + getName() + " where id=" + id);
     }
 
     public LinkedList<Object> all() throws SQLException, ClassNotFoundException {
-        return getRows("select * from " + name + ";");
+        return getRows("select * from " + getName() + ";");
     }
 
-    private LinkedList<Object> getRows(String sql) throws SQLException, ClassNotFoundException {
+    protected LinkedList<Object> getRows(String sql) throws SQLException, ClassNotFoundException {
         LinkedList<Object> response = new LinkedList<>();
 
         ResultSet result = DataBase.getDataBase().execute(sql);
@@ -33,7 +34,7 @@ public abstract class Table {
     }
 
     public void insert(DBEntity entity) throws SQLException, ClassNotFoundException {
-        String request = "insert into " + name + " values " + tupleValues(entity) + ";";
+        String request = "insert into " + getName() + " values " + tupleValues(entity) + ";";
         DataBase.getDataBase().execute(request);
     }
 
