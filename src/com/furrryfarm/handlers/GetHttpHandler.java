@@ -10,10 +10,6 @@ import java.util.*;
 
 
 abstract class GetHttpHandler implements HttpHandler {
-    private final String entryPoint;
-
-    GetHttpHandler(String entryPoint) { this.entryPoint = entryPoint; }
-
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         if (!validateRequest(httpExchange)) {
@@ -22,10 +18,10 @@ abstract class GetHttpHandler implements HttpHandler {
         }
         Map<String, String> requestParamValue = ParameterStringParser.parse(httpExchange.getRequestURI().getQuery());
         LinkedList<String> components = parseComponents(httpExchange);
-        handleRequest(httpExchange, components, requestParamValue);
+        handleGETRequest(httpExchange, components, requestParamValue);
     }
 
-    private void returnError(HttpExchange httpExchange, String text, int code) throws IOException {
+    protected void returnError(HttpExchange httpExchange, String text, int code) throws IOException {
         OutputStream outputStream = httpExchange.getResponseBody();
 
         httpExchange.sendResponseHeaders(code, text.length());
@@ -45,11 +41,10 @@ abstract class GetHttpHandler implements HttpHandler {
     }
 
     private boolean validateRequest(HttpExchange httpExchange) {
-        List<String> components = parseComponents(httpExchange);
-        return components.get(0).equals(entryPoint) && "GET".equals(httpExchange.getRequestMethod());
+        return "GET".equals(httpExchange.getRequestMethod());
     }
 
-    abstract void handleRequest(HttpExchange httpExchange,
-                                List<String> components,
-                                Map<String, String> parameters) throws IOException;
+    abstract void handleGETRequest(HttpExchange httpExchange,
+                                   List<String> components,
+                                   Map<String, String> parameters) throws IOException;
 }
