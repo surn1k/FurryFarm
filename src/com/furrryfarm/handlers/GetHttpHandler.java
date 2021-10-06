@@ -1,5 +1,6 @@
 package com.furrryfarm.handlers;
 
+import com.furrryfarm.utils.ParameterStringParser;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -19,7 +20,7 @@ abstract class GetHttpHandler implements HttpHandler {
             returnError(httpExchange, "Invalid request", 404);
             return;
         }
-        Map<String, String> requestParamValue = parseQuery(httpExchange.getRequestURI().getQuery());
+        Map<String, String> requestParamValue = ParameterStringParser.parse(httpExchange.getRequestURI().getQuery());
         LinkedList<String> components = parseComponents(httpExchange);
         handleRequest(httpExchange, components, requestParamValue);
     }
@@ -46,18 +47,6 @@ abstract class GetHttpHandler implements HttpHandler {
     private boolean validateRequest(HttpExchange httpExchange) {
         List<String> components = parseComponents(httpExchange);
         return components.get(0).equals(entryPoint) && "GET".equals(httpExchange.getRequestMethod());
-    }
-
-    public Map<String, String> parseQuery(String query) {
-        if(query == null) return null;
-
-        Map<String, String> result = new HashMap<>();
-        for (String param : query.split("&")) {
-            String[] entry = param.split("=");
-            if (entry.length > 1) result.put(entry[0], entry[1]);
-            else result.put(entry[0], "");
-        }
-        return result;
     }
 
     abstract void handleRequest(HttpExchange httpExchange,
