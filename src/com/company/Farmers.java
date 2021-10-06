@@ -17,15 +17,18 @@ public class Farmers extends Table{
 
     @Override
     String getRef(int id) {
-        String request = "SELECT " + id + "FROM COMPANY";
+        String request = "SELECT " + id + " FROM " + tableName+";";
         try {
             ResultSet result = DataBase.GetDataBase().AskDB(request);
         } catch (Exception ignored){}
+
     }
 
     @Override
     public void writeRef(int id) {
-
+        String request = "INSERT INTO " + tableName + ";";
+        try {
+        }
     }
 
     @Override
