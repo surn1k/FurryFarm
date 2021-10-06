@@ -8,8 +8,8 @@ public class DataBase {
     static private DataBase dataBase;
 
 
-     static public DataBase GetDataBase() {
-        if(!created) dataBase = new DataBase();
+     static public DataBase getDataBase() {
+        if (!created) dataBase = new DataBase();
         return dataBase;
     }
 

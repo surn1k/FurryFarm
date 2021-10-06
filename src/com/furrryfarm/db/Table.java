@@ -1,11 +1,9 @@
 package com.furrryfarm.db;
 
 import com.furrryfarm.db.entity.DBEntity;
-import com.furrryfarm.db.entity.Farmer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 
@@ -24,7 +22,7 @@ public abstract class Table {
     private LinkedList<Object> getRows(String sql) throws SQLException, ClassNotFoundException {
         LinkedList<Object> response = new LinkedList<>();
 
-        ResultSet result = DataBase.GetDataBase().execute(sql);
+        ResultSet result = DataBase.getDataBase().execute(sql);
         while (result.next()){ response.add(serialize(result)); }
 
         return response;
@@ -36,7 +34,7 @@ public abstract class Table {
 
     public void insert(DBEntity entity) throws SQLException, ClassNotFoundException {
         String request = "insert into " + name + " values " + tupleValues(entity) + ";";
-        DataBase.GetDataBase().execute(request);
+        DataBase.getDataBase().execute(request);
     }
 
     protected abstract Object serialize(ResultSet row) throws SQLException;
