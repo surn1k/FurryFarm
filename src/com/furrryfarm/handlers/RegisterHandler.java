@@ -29,6 +29,10 @@ public class RegisterHandler extends GetHttpHandler {
                 String name = parameters.get("name");
                 String type = parameters.get("type");
                 CredentialsManager.registerUser(login, password, name, type);
+
+                String content = TemplateLoader.read("register_completed.html");
+                assert content != null;
+                returnString(httpExchange, content, 200);
             } else returnString(httpExchange, "Invalid request", 404);
         }
     }
