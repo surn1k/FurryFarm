@@ -12,7 +12,6 @@ public class HomeHandler extends GetHttpHandler {
     void handleGETRequest(HttpExchange httpExchange,
                           List<String> components,
                           Map<String, String> parameters) throws IOException {
-        System.out.println("Here");
         String response = "Kek lol arBedol!";
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();

@@ -19,9 +19,6 @@ public class AuthorizedGetHandlerDecorator extends GetHttpHandlerDecorator {
                                     Map<String, String> parameters) throws IOException {
         String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
         if (sessionCookie != null) {
-            for (HttpCookie cookie : HttpCookie.parse(sessionCookie)) {
-                System.out.println(cookie.getName());
-            }
             HttpCookie idCookie = HttpCookie.parse(sessionCookie)
                                             .stream()
                                             .filter(item -> item.getName().equals("UserID"))
@@ -37,9 +34,5 @@ public class AuthorizedGetHandlerDecorator extends GetHttpHandlerDecorator {
 
     void handleUnauthorizedRequest(HttpExchange httpExchange) throws IOException {
         redirect(httpExchange, "/login");
-    }
-
-    void authorize(HttpExchange httpExchange) {
-
     }
 }
