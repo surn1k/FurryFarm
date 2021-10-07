@@ -15,7 +15,7 @@ public class InitialTables {
 
     public static void initialize() throws IOException, SQLException, ClassNotFoundException {
         Gson g = new Gson();
-        typeTables a = g.fromJson(new FileReader("tables.json"), typeTables.class);
+        typeTables a = g.fromJson(new FileReader("migrations.json"), typeTables.class);
 
         for(int i = 0; i < a.tables.length; ++i)
             DataBase.getDataBase().execute(a.tables[i]);
