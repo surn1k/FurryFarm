@@ -1,5 +1,7 @@
 package com.furrryfarm.handlers;
 
+import com.furrryfarm.utils.auth.UserRoleHelper;
+import com.furrryfarm.utils.cookies.CookieManager;
 import com.furrryfarm.utils.html.TemplateLoader;
 import com.sun.net.httpserver.HttpExchange;
 
@@ -15,19 +17,15 @@ public class HomeHandler extends GetHttpHandler {
     void handleGETRequest(HttpExchange httpExchange,
                           List<String> components,
                           Map<String, String> parameters) throws IOException {
-
-        String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
-
-        HttpCookie idCookie = HttpCookie.parse(sessionCookie)
-                .stream()
-                .filter(item -> item.getName().equals("UserID"))
-                .findFirst()
-                .orElse(null);
+        HttpCookie idCookie = CookieManager.getCookieByName(httpExchange,"UserID");
 
         if (components.size() == 1) {
             String content;
 
-            if (userIsDealer()) {
+            assert idCookie != null;
+            UserRoleHelper.UserRole userRole = UserRoleHelper.getUserRole(Integer.parseInt(idCookie.getValue()));
+
+            if (userRole == UserRoleHelper.UserRole.DEALER) {
                 content = TemplateLoader.read( "dealer.html");
             } else {
                 content = TemplateLoader.read( "farmer.html");
@@ -38,6 +36,4 @@ public class HomeHandler extends GetHttpHandler {
         }
         returnString(httpExchange, "Invalid request", 404);
     }
-
-    boolean userIsDealer() {return true;} // TODO
 }
