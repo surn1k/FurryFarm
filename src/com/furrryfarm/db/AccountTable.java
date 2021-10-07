@@ -21,7 +21,7 @@ public class AccountTable extends Table {
     }
 
     public Account getByLogin(String login) throws SQLException, ClassNotFoundException {
-        String sql = "select * from " + name + "where login= " + login + ";";
+        String sql = "select * from " + name + " where login = '" + login + "';";
         LinkedList<DBEntity> rows = getRows(sql);
         if (rows.isEmpty()) return null;
         return (Account) rows.get(0);

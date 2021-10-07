@@ -54,19 +54,19 @@ public class DealerHandler extends GetHttpHandler {
                             LinkedList<DBEntity> entity = (new AccountTable()).getByID(subID);
                             if (entity.size() == 1) {
                                 Account farmer = (Account) entity.get(0);
-                                String username = farmer.getValues()[1];
-                                msgs.add(new Message(ad, username));
+                                System.out.println("Login: " + farmer.login());
+                                msgs.add(new Message(ad, farmer.login()));
                             }
                         }
                         notificationsPublisher.notifySubscribers(msgs);
-                    } catch (Exception exception)
-                    {
-                        System.out.println(exception.toString());
+                        returnString(httpExchange, "Message sent to all subscribers", 200);
+                    } catch (Exception exception) {
+                        System.out.println(exception);
+                        returnString(httpExchange, "Something went wrong", 500);
                     }
 
-                }
-
-            }
+                } else returnString(httpExchange, "Invalid request", 404);
+            } else returnString(httpExchange, "You are not a dealer", 403);
         }
 
     }

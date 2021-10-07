@@ -28,10 +28,13 @@ public class RegisterHandler extends GetHttpHandler {
                 String name = parameters.get("name");
                 String type = parameters.get("type");
 
+                System.out.println("Here1");
                 if (CredentialsManager.exists(login)) {
+                    System.out.println("LOGIN EXISTS");
                     returnString(httpExchange, "User with this login already registered", 200);
                     return;
                 }
+                System.out.println("Here2");
 
                 CredentialsManager.registerUser(login, password, name, type);
 

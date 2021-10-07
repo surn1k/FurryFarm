@@ -28,6 +28,7 @@ public class CredentialsManager {
         try {
             return accountTable.getByLogin(login) != null;
         } catch (SQLException | ClassNotFoundException exception) {
+            System.out.println("[DB Error]: " + exception);
             return false;
         }
     }

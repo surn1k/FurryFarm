@@ -2,7 +2,7 @@ package com.furrryfarm.utils.html;
 import java.io.*;
 
 public class TemplateLoader {
-    public static String read(String templateName) throws IOException {
+    public static String read(String templateName) {
         try {
             File file = new File("templates/" + templateName);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));

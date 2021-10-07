@@ -21,7 +21,8 @@ public class AuthorizedGetHandlerDecorator extends GetHttpHandlerDecorator {
     protected void handleGETRequest(HttpExchange httpExchange,
                                     List<String> components,
                                     Map<String, String> parameters) throws IOException {
-        HttpCookie idCookie = CookieManager.getCookieByName(httpExchange, "userID");
+        HttpCookie idCookie = CookieManager.getCookieByName(httpExchange, "UserID");
+
         if (idCookie != null) {
             UserRoleHelper.UserRole idUserRole = UserRoleHelper.getUserRole(Integer.parseInt(idCookie.getValue()));
 

@@ -8,6 +8,7 @@
             font-family: Calibri, Helvetica, sans-serif;
             background-color: pink;
         }
+
         textarea {
             width: 100%;
             line-height: 1.5;
@@ -15,6 +16,7 @@
             border-radius: 5px;
             box-shadow: 1px 1px 1px #999;
         }
+
         button {
             background-color: #4CAF50;
             width: 100%;
@@ -24,12 +26,15 @@
             border: none;
             cursor: pointer;
         }
+
         form {
             border: 3px solid #f1f1f1;
         }
+
         button:hover {
             opacity: 0.7;
         }
+
         label {
             display: block;
             margin-bottom: 10px;
@@ -42,13 +47,15 @@
     </style>
 </head>
 <body>
-<center> <h1> FurryFarm Dealer Page </h1> </center>
-<form method="GET" action="/login/auth">
+<center><h1> FurryFarm Dealer Page </h1></center>
+<form method="GET" action="/dealer">
     <div class="container">
         <label for="ad">Advertisement: </label>
         <textarea id="ad" name="ad" rows="5" required></textarea>
         <button type="submit">Publish</button>
     </div>
+    <a href="/login/logout">Logout</a><br/>
+    <a href="/register">Register</a>
 </form>
 </body>
 </html>

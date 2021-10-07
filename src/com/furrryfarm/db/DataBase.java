@@ -1,11 +1,16 @@
 package com.furrryfarm.db;
 
+import javax.sql.RowSet;
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetFactory;
+import javax.sql.rowset.RowSetProvider;
 import java.sql.DriverManager;
 import java.sql.*;
 
 public class DataBase {
     private static boolean created;
-    static private DataBase dataBase;
+    static private volatile DataBase dataBase;
+    private static final Object mutex = new Object();
 
 
      static public DataBase getDataBase() {
@@ -18,27 +23,32 @@ public class DataBase {
     }
 
 
-    public ResultSet execute(String request) throws ClassNotFoundException, SQLException {
+    public CachedRowSet execute(String request) throws ClassNotFoundException, SQLException {
         Connection connection;
-        ResultSet result = null;
 
         Class.forName("org.sqlite.JDBC");
         connection = DriverManager.getConnection("jdbc:sqlite:furryfarm.db");
+
         Statement statement = connection.createStatement();
-        if (request.startsWith("select")) {
-            result = statement.executeQuery(request);
-        } else if (request.startsWith("CREATE")){
+        RowSetFactory factory = RowSetProvider.newFactory();
+        CachedRowSet rowSet = factory.createCachedRowSet();
 
-            statement.execute(request);
-        } else {
-            statement.executeUpdate(request);
-        }
+        synchronized (mutex) {
+            if (request.startsWith("select")) {
+                connection.setAutoCommit(false);
+                ResultSet result = statement.executeQuery(request);
+                rowSet.populate(result);
+            } else if (request.startsWith("create")) {
+                statement.execute(request);
+            } else {
+                connection.setAutoCommit(false);
+                statement.executeUpdate(request);
+            }
 
-        statement.close();
-        if (!request.startsWith("CREATE")) {
-            connection.commit();
+            statement.close();
+            if (!request.startsWith("create")) connection.commit();
+            connection.close();
         }
-        connection.close();
-        return result;
+        return rowSet;
     }
 }

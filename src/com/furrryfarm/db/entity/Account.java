@@ -5,5 +5,12 @@ public record Account(int id, String login, String password) implements DBEntity
     public String[] getValues() {
         return new String[]{login, password};
     }
+
+    @Override
+    public String[] getColNames() {
+        return new String[] { "login", "password" };
+    }
+
+
 }
 

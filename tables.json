@@ -1,10 +1,10 @@
 {
   "tables": [
-    "CREATE TABLE IF NOT EXISTS farmer (id int, name varchar(255));",
-    "CREATE TABLE IF NOT EXISTS dealer (id int, name varchar(255));",
-    "CREATE TABLE IF NOT EXISTS account (id int, login varchar(255), password varchar(255));",
-    "CREATE TABLE IF NOT EXISTS subscription (publisher varchar(255), subscriber varchar(255));",
-    "CREATE TABLE IF NOT EXISTS message ('from' int, 'to' int, text varchar(255));",
-    "CREATE TABLE IF NOT EXISTS complains (id_farmer int, 'to' int, text varchar(255));"
+    "create table if not exists farmer (id int, name varchar(255));",
+    "create table if not exists dealer (id int, name varchar(255));",
+    "create table if not exists account (id integer primary key autoincrement not null, login varchar(255), password varchar(255));",
+    "create table if not exists subscription (publisher varchar(255), subscriber varchar(255), unique(publisher, subscriber) on conflict replace);",
+    "create table if not exists message ('from' int, 'to' int, text varchar(255));",
+    "create table if not exists complains (id_farmer int, 'to' int, text varchar(255));"
   ]
 }

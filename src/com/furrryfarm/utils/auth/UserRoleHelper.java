@@ -29,5 +29,14 @@ public class UserRoleHelper
         }
         return UserRole.OTHER;
     }
+
+    public static boolean authorized(int id) {
+        try {
+            return !(new AccountTable()).getByID(id).isEmpty();
+        } catch (Exception exception) {
+            System.out.println("[DB Error]: " + exception);
+        }
+        return false;
+    }
 }
 
