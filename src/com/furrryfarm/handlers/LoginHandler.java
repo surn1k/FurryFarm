@@ -25,7 +25,7 @@ public class LoginHandler extends GetHttpHandler {
                     String password = parameters.get("password");
 
                     if (CredentialsManager.validate(login, password)) {
-                        Integer id = CredentialsManager.getID(login, password);
+                        Integer id = CredentialsManager.getID(login);
                         assert id != null;
                         CookieManager.setCookie(httpExchange,"UserID", id.toString());
                         redirect(httpExchange, "/home");

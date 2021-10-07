@@ -19,8 +19,8 @@ public class AccountTable extends Table {
                 row.getString("login"), row.getString("password"));
     }
 
-    public Account getByCredentials(String login, String password) throws SQLException, ClassNotFoundException {
-        String sql = "select * from " + name + "where login= " + login + " and password=" + password + ";";
+    public Account getByLogin(String login) throws SQLException, ClassNotFoundException {
+        String sql = "select * from " + name + "where login= " + login + ";";
         LinkedList<Object> rows = getRows(sql);
         if (rows.isEmpty()) return null;
         return (Account) rows.get(0);

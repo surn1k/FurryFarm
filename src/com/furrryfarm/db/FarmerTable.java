@@ -3,8 +3,6 @@ import com.furrryfarm.db.entity.Farmer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 
 public class FarmerTable extends Table {
     private final String name = "farmer";

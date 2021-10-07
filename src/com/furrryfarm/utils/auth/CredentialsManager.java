@@ -16,15 +16,25 @@ public class CredentialsManager {
 
     public static boolean validate(String login, String password) {
         try {
-            return accountTable.getByCredentials(login, password) != null;
+            Account account = accountTable.getByLogin(login);
+            return account != null && account.password().equals(password);
+        } catch (SQLException | ClassNotFoundException exception) {
+            System.out.println("[DB Error]: "  + exception);
+            return false;
+        }
+    }
+
+    public static boolean exists(String login) {
+        try {
+            return accountTable.getByLogin(login) != null;
         } catch (SQLException | ClassNotFoundException exception) {
             return false;
         }
     }
 
-    public static Integer getID(String login, String password) {
+    public static Integer getID(String login) {
         try {
-            return accountTable.getByCredentials(login, password).id();
+            return accountTable.getByLogin(login).id();
         } catch (SQLException | ClassNotFoundException exception) {
             return null;
         }
@@ -38,7 +48,7 @@ public class CredentialsManager {
         Account account = new Account(0, login, password);
         try {
             accountTable.insert(account);
-            Account insertedAccount = accountTable.getByCredentials(login, password);
+            Account insertedAccount = accountTable.getByLogin(login);
 
             int accountID = insertedAccount.id();
             if (type.equals("farmer")) {
