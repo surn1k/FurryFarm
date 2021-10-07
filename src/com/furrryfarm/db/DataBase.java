@@ -27,12 +27,17 @@ public class DataBase {
         Statement statement = connection.createStatement();
         if (request.startsWith("select")) {
             result = statement.executeQuery(request);
+        } else if (request.startsWith("CREATE")){
+
+            statement.execute(request);
         } else {
             statement.executeUpdate(request);
         }
 
         statement.close();
-        connection.commit();
+        if (!request.startsWith("CREATE")) {
+            connection.commit();
+        }
         connection.close();
         return result;
     }
