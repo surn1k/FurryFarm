@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class AccountTable extends Table {
-    final String name = "account";
+    private final String name = "account";
 
     @Override
     protected String getName() {

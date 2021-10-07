@@ -4,7 +4,7 @@ import java.sql.DriverManager;
 import java.sql.*;
 
 public class DataBase {
-    private  static  boolean created;
+    private static boolean created;
     static private DataBase dataBase;
 
 
