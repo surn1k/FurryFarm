@@ -10,16 +10,16 @@ import java.util.LinkedList;
 public abstract class Table {
     protected abstract String getName();
 
-    public LinkedList<Object> getByID(int id) throws SQLException, ClassNotFoundException {
+    public LinkedList<DBEntity> getByID(int id) throws SQLException, ClassNotFoundException {
         return getRows("select * from " + getName() + " where id=" + id + ";");
     }
 
-    public LinkedList<Object> all() throws SQLException, ClassNotFoundException {
+    public LinkedList<DBEntity> all() throws SQLException, ClassNotFoundException {
         return getRows("select * from " + getName() + ";");
     }
 
-    protected LinkedList<Object> getRows(String sql) throws SQLException, ClassNotFoundException {
-        LinkedList<Object> response = new LinkedList<>();
+    protected LinkedList<DBEntity> getRows(String sql) throws SQLException, ClassNotFoundException {
+        LinkedList<DBEntity> response = new LinkedList<>();
 
         ResultSet result = DataBase.getDataBase().execute(sql);
         while (result.next()){ response.add(serialize(result)); }
@@ -36,5 +36,5 @@ public abstract class Table {
         DataBase.getDataBase().execute(request);
     }
 
-    protected abstract Object serialize(ResultSet row) throws SQLException;
+    protected abstract DBEntity serialize(ResultSet row) throws SQLException;
 }

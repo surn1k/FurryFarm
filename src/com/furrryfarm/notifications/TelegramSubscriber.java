@@ -9,11 +9,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 public class TelegramSubscriber implements Subscriber {
-    private final String token;
-
-    public TelegramSubscriber(String token) {
-        this.token = token;
-    }
+    private static final String token = "2002000409:AAHQxT1jycCHCKvJ78bbV3RdnDzxKl-jXf0";
 
     private String buildSendMessageUrl(int chatID, String text) {
         return "https://api.telegram.org/bot" + token + "/sendMessage?chat_id=" +

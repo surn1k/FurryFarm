@@ -1,8 +1,10 @@
 package com.furrryfarm.db;
+import com.furrryfarm.db.entity.DBEntity;
 import com.furrryfarm.db.entity.Farmer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 public class FarmerTable extends Table {
     private final String name = "farmer";
@@ -13,7 +15,7 @@ public class FarmerTable extends Table {
     }
 
     @Override
-    public Object serialize(ResultSet row) throws SQLException {
+    public Farmer serialize(ResultSet row) throws SQLException {
         return new Farmer(row.getInt("id"), row.getString("name"));
     }
 }

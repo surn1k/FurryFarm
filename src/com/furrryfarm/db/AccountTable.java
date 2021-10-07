@@ -1,5 +1,6 @@
 package com.furrryfarm.db;
 import com.furrryfarm.db.entity.Account;
+import com.furrryfarm.db.entity.DBEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,14 +15,14 @@ public class AccountTable extends Table {
     }
 
     @Override
-    protected Object serialize(ResultSet row) throws SQLException {
+    protected Account serialize(ResultSet row) throws SQLException {
         return new Account(row.getInt("id"),
                 row.getString("login"), row.getString("password"));
     }
 
     public Account getByLogin(String login) throws SQLException, ClassNotFoundException {
         String sql = "select * from " + name + "where login= " + login + ";";
-        LinkedList<Object> rows = getRows(sql);
+        LinkedList<DBEntity> rows = getRows(sql);
         if (rows.isEmpty()) return null;
         return (Account) rows.get(0);
     }

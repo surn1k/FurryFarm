@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Login Page </title>
+    <style>
+        Body {
+            font-family: Calibri, Helvetica, sans-serif;
+            background-color: pink;
+        }
+        textarea {
+            width: 100%;
+            line-height: 1.5;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 1px 1px 1px #999;
+        }
+        button {
+            background-color: #4CAF50;
+            width: 100%;
+            color: orange;
+            padding: 15px;
+            margin: 10px 0px;
+            border: none;
+            cursor: pointer;
+        }
+        form {
+            border: 3px solid #f1f1f1;
+        }
+        button:hover {
+            opacity: 0.7;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            padding: 25px;
+            background-color: lightblue;
+        }
+    </style>
+</head>
+<body>
+<center> <h1> FurryFarm Dealer Page </h1> </center>
+<form method="GET" action="/login/auth">
+    <div class="container">
+        <label for="ad">Advertisement: </label>
+        <textarea id="ad" name="ad" rows="5" required></textarea>
+        <button type="submit">Publish</button>
+    </div>
+</form>
+</body>
+</html>
