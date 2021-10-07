@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> Login Page </title>
+    <title> Complaint </title>
     <style>
         Body {
             font-family: Calibri, Helvetica, sans-serif;
@@ -47,12 +47,16 @@
     </style>
 </head>
 <body>
-<center><h1> FurryFarm {{name}} Dealer's Page </h1></center>
-<form method="GET" action="/dealer">
+<center><h1> Complaint </h1></center>
+<form method="GET" action="/complaint/sent">
     <div class="container">
-        <label for="ad">Advertisement: </label>
+        <label for="ad">Complaint: </label>
         <textarea id="ad" name="ad" rows="5" required></textarea>
-        <button type="submit">Publish</button>
+        <label for="dest">Choose Destination</label>
+        <select name="dest" id="dest">
+            {{dealers}}
+        </select>
+        <button type="submit">Send Complaint</button>
     </div>
     <a href="/login/logout">Logout</a><br/>
     <a href="/register">Register</a>

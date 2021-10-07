@@ -25,6 +25,9 @@ public class Main {
                 UserRoleHelper.UserRole.DEALER));
         server.createContext("/farmer", new AuthorizedGetHandlerDecorator(new FarmerHandler(),
                 UserRoleHelper.UserRole.FARMER));
+        server.createContext("/complaint", new AuthorizedGetHandlerDecorator(new ComplaintHandler(),
+                UserRoleHelper.UserRole.FARMER));
+//        server.createContext("/", new LandHandler());
 
         ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
         server.setExecutor(threadPoolExecutor);
