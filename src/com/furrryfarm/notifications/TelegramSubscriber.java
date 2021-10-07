@@ -30,6 +30,7 @@ public class TelegramSubscriber implements Subscriber {
         JsonObject response = (JsonObject) updatesRequest.make(buildGetUpdatesUrl(), null);
         JsonArray updates = response.getAsJsonArray("result");
 
+        // TODO: parse in class
         for (int i = 0; i < updates.size(); i++) {
             JsonObject update = updates.get(i).getAsJsonObject();
             JsonObject message = update.get("message").getAsJsonObject();

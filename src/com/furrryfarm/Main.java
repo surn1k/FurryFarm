@@ -1,6 +1,7 @@
 package com.furrryfarm;
 
 import com.furrryfarm.handlers.*;
+import com.furrryfarm.utils.auth.UserRoleHelper;
 import com.sun.net.httpserver.HttpServer;
 
 import java.net.InetSocketAddress;
@@ -18,7 +19,8 @@ public class Main {
         // So urls like /test_and_some_rubbish will be accepted (for path: /test)
         // TODO: fix it (constructor parameter for handler is not allowed)
         server.createContext("/home",
-                new LoggingGetHandlerDecorator(new AuthorizedGetHandlerDecorator(new HomeHandler())));
+                new LoggingGetHandlerDecorator(
+                        new AuthorizedGetHandlerDecorator(new HomeHandler(), UserRoleHelper.UserRole.AUTHORISED)));
         server.createContext("/login", new LoggingGetHandlerDecorator(new LoginHandler()));
         server.createContext("/register", new RegisterHandler());
 

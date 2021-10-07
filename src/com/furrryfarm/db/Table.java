@@ -8,12 +8,10 @@ import java.util.LinkedList;
 
 
 public abstract class Table {
-    String name;
-
     protected abstract String getName();
 
     public LinkedList<Object> getByID(int id) throws SQLException, ClassNotFoundException {
-        return getRows("select * from " + getName() + " where id=" + id);
+        return getRows("select * from " + getName() + " where id=" + id + ";");
     }
 
     public LinkedList<Object> all() throws SQLException, ClassNotFoundException {
