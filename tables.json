@@ -1,0 +1,10 @@
+{
+  "tables": [
+    "CREATE TABLE IF NOT EXISTS farmer (id int, name varchar(255));",
+    "CREATE TABLE IF NOT EXISTS dealer (id int, name varchar(255));",
+    "CREATE TABLE IF NOT EXISTS account (id int, login varchar(255), password varchar(255));",
+    "CREATE TABLE IF NOT EXISTS subscription (publisher varchar(255), subscriber varchar(255));",
+    "CREATE TABLE IF NOT EXISTS message ('from' int, 'to' int, text varchar(255));",
+    "CREATE TABLE IF NOT EXISTS complains (id_farmer int, 'to' int, text varchar(255));"
+  ]
+}
