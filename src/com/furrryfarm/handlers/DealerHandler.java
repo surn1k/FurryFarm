@@ -1,7 +1,10 @@
 package com.furrryfarm.handlers;
 
+import com.furrryfarm.db.AccountTable;
 import com.furrryfarm.db.FarmerTable;
 import com.furrryfarm.db.SubscriptionTable;
+import com.furrryfarm.db.entity.Account;
+import com.furrryfarm.db.entity.DBEntity;
 import com.furrryfarm.db.entity.Farmer;
 import com.furrryfarm.db.entity.Subscription;
 import com.furrryfarm.notifications.*;
@@ -26,9 +29,8 @@ public class DealerHandler extends GetHttpHandler {
 
     @Override
     void handleGETRequest(HttpExchange httpExchange, List<String> components, Map<String, String> parameters) throws IOException {
-        if (components.size() == 2
-                && components.get(0).equals("home")
-                && components.get(1).equals("dealer"))
+        if (components.size() == 1
+                && components.get(0).equals("dealer"))
         {
             HttpCookie idCookie = CookieManager.getCookieByName(httpExchange,"UserID");
             assert idCookie != null;
@@ -48,9 +50,11 @@ public class DealerHandler extends GetHttpHandler {
                                 subs) {
                             String[] values = sub.getValues();
                             int subID = Integer.parseInt(values[1]);
-                            LinkedList<Farmer> farmer = (LinkedList<Farmer>) (LinkedList<?>) (new FarmerTable()).getByID(subID);
-                            if (farmer.size() == 1) {
-                                String username = farmer.getFirst().getValues()[1];
+
+                            LinkedList<DBEntity> entity = (new AccountTable()).getByID(subID);
+                            if (entity.size() == 1) {
+                                Account farmer = (Account) entity.get(0);
+                                String username = farmer.getValues()[1];
                                 msgs.add(new Message(ad, username));
                             }
                         }

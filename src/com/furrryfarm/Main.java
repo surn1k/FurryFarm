@@ -20,6 +20,7 @@ public class Main {
                         new AuthorizedGetHandlerDecorator(new HomeHandler(), UserRoleHelper.UserRole.AUTHORISED)));
         server.createContext("/login", new LoggingGetHandlerDecorator(new LoginHandler()));
         server.createContext("/register", new RegisterHandler());
+        server.createContext("/dealer", new DealerHandler());
 
         ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(10);
         server.setExecutor(threadPoolExecutor);
