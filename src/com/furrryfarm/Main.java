@@ -9,9 +9,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 
 public class Main {
-    // TODO: move telegram bot credentials in Singleton (and another configurations like port, nthreads)
-    private static final String token = "2002000409:AAHQxT1jycCHCKvJ78bbV3RdnDzxKl-jXf0";
-
     public static void main(String[] args) throws Exception {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 
@@ -30,7 +27,7 @@ public class Main {
     }
 //    public static void main(String[] args) throws Exception {
 //
-//        List<Subscriber> subscribers = Arrays.asList(new TelegramSubscriber(token), new ConsoleSubscriber());
+//        List<Subscriber> subscribers = Arrays.asList(new TelegramSubscriber(), new ConsoleSubscriber());
 //        NotificationsPublisher publisher = new NotificationsPublisher(new LinkedList<>(subscribers));
 //
 //

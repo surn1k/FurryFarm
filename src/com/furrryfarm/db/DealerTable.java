@@ -1,5 +1,6 @@
 package com.furrryfarm.db;
 
+import com.furrryfarm.db.entity.DBEntity;
 import com.furrryfarm.db.entity.Dealer;
 
 import java.sql.ResultSet;
@@ -14,7 +15,7 @@ public class DealerTable extends Table {
     }
 
     @Override
-    public Object serialize(ResultSet row) throws SQLException {
+    public DBEntity serialize(ResultSet row) throws SQLException {
         return new Dealer(row.getInt("id"), row.getString("name"));
     }
 }

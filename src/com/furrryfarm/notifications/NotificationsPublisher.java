@@ -6,6 +6,10 @@ import java.util.LinkedList;
 public class NotificationsPublisher {
     private final LinkedList<Subscriber> subscribers;
 
+    public NotificationsPublisher() {
+        this.subscribers = new LinkedList<>();
+    }
+
     public NotificationsPublisher(LinkedList<Subscriber> subscribers) {
         this.subscribers = subscribers;
     }
